@@ -1,0 +1,39 @@
+name: Deploy Solution to UAT
+
+on:
+  workflow_dispatch:
+
+env:
+  SOLUTION_NAME: GITHUBSOLUTIONFORDEPLOYMENT
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: UAT
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Install Power Platform Actions
+        uses: microsoft/powerplatform-actions/actions-install@v1
+
+      - name: Pack solution
+        uses: microsoft/powerplatform-actions/pack-solution@v1
+        with:
+          solution-folder: solutions/${{ env.SOLUTION_NAME }}
+          solution-file: out/${{ env.SOLUTION_NAME }}_managed.zip
+          solution-type: Managed
+
+      - name: Import solution into UAT
+        uses: microsoft/powerplatform-actions/import-solution@v1
+        with:
+          environment-url: ${{ secrets.UAT_ENV_URL }}
+          app-id: ${{ secrets.UAT_CLIENT_ID }}
+          client-secret: ${{ secrets.UAT_CLIENT_SECRET }}
+          tenant-id: ${{ secrets.UAT_TENANT_ID }}
+          solution-file: out/${{ env.SOLUTION_NAME }}_managed.zip
+          force-overwrite: true
+          publish-changes: true
