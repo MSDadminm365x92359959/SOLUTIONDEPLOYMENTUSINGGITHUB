@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  SOLUTION_NAME: GITHUB_SOLUTION_FOR_DEPLOYMENT
+  SOLUTION_NAME: GITHUBSOLUTIONFORDEPLOYMENT
 
 jobs:
   export:
