@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 env:
-  SOLUTION_NAME: GITHUBSOLUTIONFORDEPLOYMENT
-
+  SOLUTION_NAME: GITHUB SOLUTION FOR DEPLOYMENT
+  
 jobs:
   export:
     runs-on: ubuntu-latest
