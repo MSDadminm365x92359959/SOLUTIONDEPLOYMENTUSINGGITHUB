@@ -12,21 +12,25 @@ jobs:
     environment: UAT
 
     steps:
+      # 1. Get solution source from main branch
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           ref: main
 
+      # 2. Install Power Platform tools
       - name: Install Power Platform Actions
         uses: microsoft/powerplatform-actions/actions-install@v1
 
+      # 3. Pack solution as Unmanaged
       - name: Pack solution
         uses: microsoft/powerplatform-actions/pack-solution@v1
         with:
           solution-folder: solutions/${{ env.SOLUTION_NAME }}
-          solution-file: out/${{ env.SOLUTION_NAME }}_managed.zip
-          solution-type: Managed
+          solution-file: out/${{ env.SOLUTION_NAME }}.zip
+          solution-type: Unmanaged
 
+      # 4. Import solution into QA
       - name: Import solution into UAT
         uses: microsoft/powerplatform-actions/import-solution@v1
         with:
@@ -34,6 +38,6 @@ jobs:
           app-id: ${{ secrets.UAT_CLIENT_ID }}
           client-secret: ${{ secrets.UAT_CLIENT_SECRET }}
           tenant-id: ${{ secrets.UAT_TENANT_ID }}
-          solution-file: out/${{ env.SOLUTION_NAME }}_managed.zip
+          solution-file: out/${{ env.SOLUTION_NAME }}.zip
           force-overwrite: true
           publish-changes: true
