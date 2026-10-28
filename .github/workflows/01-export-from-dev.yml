@@ -1,51 +1,35 @@
-name: 01 - Export Solution from DEV
-
+name: export-solution
 on:
   workflow_dispatch:
-    inputs:
-      solution_name:
-        description: "GITHUBSOLUTIONFORDEPLOYMENT"
-        required: true
-
-permissions:
-  contents: write
-
+env:
+  SOLUTION_NAME: GITHUB SOLUTION FOR DEPLOYMENT
 jobs:
-  export-solution:
-    runs-on: windows-latest
-
+  export:
+    runs-on: ubuntu-latest
+    environment: dev
+    permissions:
+      contents: write
     steps:
-
-      # Step 1
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # Step 2
-      - name: Export unmanaged solution from DEV
-        uses: microsoft/powerplatform-actions/export-solution@v1
+      - uses: actions/checkout@v4
+      - uses: microsoft/powerplatform-actions/actions-install@v1
+      - uses: microsoft/powerplatform-actions/export-solution@v1
         with:
-          environment-url: ${{ secrets.DEV_ENV_URL }}
-          app-id: ${{ secrets.DEV_CLIENT_ID }}
-          client-secret: ${{ secrets.DEV_CLIENT_SECRET }}
-          tenant-id: ${{ secrets.DEV_TENANT_ID }}
-          solution-name: ${{ github.event.inputs.solution_name }}
-          solution-output-file: out/${{ github.event.inputs.solution_name }}.zip
-
-      # Step 3
-      - name: Unpack solution
-        uses: microsoft/powerplatform-actions/unpack-solution@v1
+          environment-url: ${{ secrets.DEV_ENV_UR }}  
+          app-id: ${{ secrets.DEV_CLIENT_ID }}         
+          client-secret: ${{ secrets.DEV_CLIENT_SECRET }}  
+          tenant-id: ${{ secrets.DEV_TENANT_ID }} 
+          solution-name: ${{ env.SOLUTION_NAME }}  
+          solution-output-file: out/${{ env.SOLUTION_NAME }}.zip
+          managed: false
+      - uses: microsoft/powerplatform-actions/unpack-solution@v1
         with:
-          solution-file: out/${{ github.event.inputs.solution_name }}.zip
-          solution-folder: solutions/${{ github.event.inputs.solution_name }}
+          solution-file: out/${{ env.SOLUTION_NAME }}.zip
+          solution-folder: solutions/${{ env.SOLUTION_NAME }}
           solution-type: Unmanaged
           overwrite-files: true
-
-      # Step 4
-      - name: Commit changes to GitHub
-        shell: bash
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add solutions/
-          git diff --staged --quiet || git commit -m "Export ${{ github.event.inputs.solution_name }} from DEV"
-          git push
+      - uses: microsoft/powerplatform-actions/unpack-solution@v1
+        with:
+          solution-folder: solutions/${{ env.SOLUTION_NAME }}
+          solution-target-folder: solutions/${{ env.SOLUTION_NAME }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          allow-empty-commit: true
