@@ -1,35 +1,60 @@
 name: export-solution
+
 on:
   workflow_dispatch:
+
 env:
-  SOLUTION_NAME: GITHUB SOLUTION FOR DEPLOYMENT
+  SOLUTION_NAME: GITHUB_SOLUTION_FOR_DEPLOYMENT
+
 jobs:
   export:
     runs-on: ubuntu-latest
     environment: dev
+
     permissions:
       contents: write
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: microsoft/powerplatform-actions/actions-install@v1
-      - uses: microsoft/powerplatform-actions/export-solution@v1
+      # 1. Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Install Power Platform Actions
+      - name: Install Power Platform Actions
+        uses: microsoft/powerplatform-actions/actions-install@v1
+
+      # 3. Export solution from DEV
+      - name: Export solution from DEV
+        uses: microsoft/powerplatform-actions/export-solution@v1
         with:
-          environment-url: ${{ secrets.DEV_ENV_UR }}  
-          app-id: ${{ secrets.DEV_CLIENT_ID }}         
-          client-secret: ${{ secrets.DEV_CLIENT_SECRET }}  
-          tenant-id: ${{ secrets.DEV_TENANT_ID }} 
-          solution-name: ${{ env.SOLUTION_NAME }}  
+          environment-url: ${{ secrets.DEV_ENV_URL }}
+          app-id: ${{ secrets.DEV_CLIENT_ID }}
+          client-secret: ${{ secrets.DEV_CLIENT_SECRET }}
+          tenant-id: ${{ secrets.DEV_TENANT_ID }}
+          solution-name: ${{ env.SOLUTION_NAME }}
           solution-output-file: out/${{ env.SOLUTION_NAME }}.zip
           managed: false
-      - uses: microsoft/powerplatform-actions/unpack-solution@v1
+
+      # 4. Unpack exported solution
+      - name: Unpack solution
+        uses: microsoft/powerplatform-actions/unpack-solution@v1
         with:
           solution-file: out/${{ env.SOLUTION_NAME }}.zip
           solution-folder: solutions/${{ env.SOLUTION_NAME }}
           solution-type: Unmanaged
           overwrite-files: true
-      - uses: microsoft/powerplatform-actions/unpack-solution@v1
-        with:
-          solution-folder: solutions/${{ env.SOLUTION_NAME }}
-          solution-target-folder: solutions/${{ env.SOLUTION_NAME }}
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          allow-empty-commit: true
+
+      # 5. Commit unpacked solution to repository
+      - name: Commit solution to repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add "solutions/${{ env.SOLUTION_NAME }}"
+
+          if git diff --cached --quiet; then
+            echo "No solution changes found."
+          else
+            git commit -m "Export ${{ env.SOLUTION_NAME }} from DEV"
+            git push
+          fi
