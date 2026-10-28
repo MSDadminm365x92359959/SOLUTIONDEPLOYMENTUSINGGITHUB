@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>1</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{105e0227-7617-4405-836e-5e18509ce3ab}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="new_projectcode" select="1" icon="1" preview="1">
+        <row name="result" id="new_projects_pmpmoid">
+          <cell name="new_projectcode" width="300" />
+          <cell name="createdon" width="125" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>4</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="new_projects_pmpmo">
+          <attribute name="new_projects_pmpmoid" />
+          <attribute name="new_projectcode" />
+          <attribute name="createdon" />
+          <order attribute="new_projectcode" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <filter type="or" isquickfindfields="1">
+            <condition attribute="new_projectcode" operator="like" value="{0}" />
+          </filter>
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Quick Find Active Projects_PM/PMOS" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

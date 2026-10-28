@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{71f8a128-2a7e-42ab-83c7-28172fba1c65}</formid>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab verticallayout="true" id="{7211AF5A-5C02-452B-96BE-B88182DDA632}" IsUserDefined="1">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{F15FA778-66BB-4841-BF39-99BB5BAD10D9}">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{7C1F37D2-8071-4930-89FC-D098CA7944E9}">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="new_projectcode" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="new_ProjectCode" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{36217E4D-E95E-431B-9ED2-964246D676ED}">
+                        <labels>
+                          <label description="Owner" languagecode="1033" />
+                        </labels>
+                        <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{91587d24-03bd-4461-be46-31ec1bb304bf}">
+                        <labels>
+                          <label description="Project Name" languagecode="1033" />
+                        </labels>
+                        <control id="new_projectname" classid="{4273edbd-ac1d-40d3-9fb2-095c621b552d}" datafieldname="new_projectname" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{579e8130-7ba2-4b9e-921f-1f4e1c24c2f3}">
+                        <labels>
+                          <label description="Project start Date" languagecode="1033" />
+                        </labels>
+                        <control id="new_projectstartdate" classid="{4273edbd-ac1d-40d3-9fb2-095c621b552d}" datafieldname="new_projectstartdate" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{5cba9db6-827b-4f2b-b652-2ea8bb25999d}">
+                        <labels>
+                          <label description="Project End Date" languagecode="1033" />
+                        </labels>
+                        <control id="new_projectenddate" classid="{4273edbd-ac1d-40d3-9fb2-095c621b552d}" datafieldname="new_projectenddate" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{e0c825c2-0628-4922-98fe-a49fa7ef6c07}">
+                        <labels>
+                          <label description="Resource Count" languagecode="1033" />
+                        </labels>
+                        <control id="new_resourcecount" classid="{c6d124ca-7eda-4a60-aea9-7fb8d318b68f}" datafieldname="new_resourcecount" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>
